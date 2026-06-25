@@ -24,7 +24,7 @@
 #include "app_config.h"
 #include "wifi_manager.h"
 #include "modbus_master.h"
-#include "devices/dtsu666.h"
+#include "dtsu666.h"
 
 // Dodaj sem include za vsako naslednjo napravo:
 // #include "devices/sdm120.h"

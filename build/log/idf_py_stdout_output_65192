@@ -1,0 +1,26 @@
+Command: cmake -G Ninja -B /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build -DPYTHON_DEPS_CHECKED=1 -DPYTHON=/home/rados/.espressif/python_env/idf6.0_py3.12_env/bin/python -DESP_PLATFORM=1 -DCCACHE_ENABLE=False /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0
+-- IDF_TARGET is not set, guessed 'esp32s3' from sdkconfig '/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/sdkconfig'
+-- Found Git: /usr/bin/git (found version "2.43.0") 
+-- Component directory /home/rados/esp/.espressif/v6.0.1/esp-idf/components/mqtt does not contain a CMakeLists.txt file. No component will be added
+-- Minimal build - OFF
+-- The C compiler identification is GNU 15.2.0
+-- The CXX compiler identification is GNU 15.2.0
+-- The ASM compiler identification is GNU
+-- Found assembler: /home/rados/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /home/rados/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/bin/xtensa-esp32s3-elf-gcc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /home/rados/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/bin/xtensa-esp32s3-elf-g++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Building ESP-IDF components for target esp32s3
+NOTICE: Processing 2 dependencies:
+NOTICE: [1/2] espressif/esp-modbus (2.1.2)
+NOTICE: [2/2] idf (6.0.1)
+-- DEBUG: Use esp-modbus component folder: /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/managed_components/espressif__esp-modbus.
+-- ESP-TEE is currently supported only on the esp32c6;esp32h2;esp32c5;esp32c61 SoCs
+-- Configuring incomplete, errors occurred!

@@ -206,5 +206,9 @@
 /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/rt/librt.a
 /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/spiffs/libspiffs.a
 /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/espressif__esp-modbus/libespressif__esp-modbus.a
-/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/main/libmain.a
+/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/modbus_core/libmodbus_core.a
 /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/espressif__esp-modbus/libespressif__esp-modbus.a
+/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/DTSU666H/libDTSU666H.a
+/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/modbus_core/libmodbus_core.a
+/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/main/libmain.a
+/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/DTSU666H/libDTSU666H.a

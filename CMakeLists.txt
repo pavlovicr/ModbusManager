@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.16)
 
-# Izključi zastareli freemodbus (ESP-IDF < 5.x) in uporabi esp-modbus
-list(APPEND EXTRA_COMPONENT_DIRS "$ENV{IDF_PATH}/components")
+set(EXTRA_COMPONENT_DIRS 
+    ${CMAKE_CURRENT_SOURCE_DIR}/components
+    ${CMAKE_CURRENT_SOURCE_DIR}/devices
+)
+
 set(EXCLUDE_COMPONENTS freemodbus)
 
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)

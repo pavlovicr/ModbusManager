@@ -206,5 +206,9 @@ $<TARGET_FILE:idf::perfmon>
 $<TARGET_FILE:idf::rt>
 $<TARGET_FILE:idf::spiffs>
 $<TARGET_FILE:idf::espressif__esp-modbus>
-$<TARGET_FILE:idf::main>
+$<TARGET_FILE:idf::modbus_core>
 $<TARGET_FILE:__idf_espressif__esp-modbus>
+$<TARGET_FILE:idf::DTSU666H>
+$<TARGET_FILE:__idf_modbus_core>
+$<TARGET_FILE:idf::main>
+$<TARGET_FILE:__idf_DTSU666H>

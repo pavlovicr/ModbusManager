@@ -724,6 +724,16 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
+  include("/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/modbus_core/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
+  include("/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/DTSU666H/cmake_install.cmake")
+endif()
+
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for the subdirectory.
   include("/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/main/cmake_install.cmake")
 endif()
 
