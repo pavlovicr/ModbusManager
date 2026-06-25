@@ -1,0 +1,18 @@
+Command: ninja all
+[1/9] Performing build step for 'bootloader'
+[1/1] cd /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/bootloader && /home/rados/.espressif/python_env/idf6.0_py3.12_env/bin/python /home/rados/esp/.espressif/v6.0.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/bootloader/bootloader.bin
+Bootloader binary size 0x5240 bytes. 0x2dc0 bytes (36%) free.
+[2/9] No install step for 'bootloader'
+[3/9] Completed 'bootloader'
+[4/9] Building C object esp-idf/DTSU666H/CMakeFiles/__idf_DTSU666H.dir/dtsu666.c.obj
+[5/9] Linking C static library esp-idf/DTSU666H/libDTSU666H.a
+[6/9] Generating esp-idf/esp_system/ld/sections.ld
+[7/9] Linking CXX executable modbus_zlan_master_v1.0.elf
+[8/9] Generating binary image from built executable
+esptool v5.2.dev2
+Creating ESP32S3 image...
+Merged 3 ELF sections.
+Successfully created ESP32S3 image.
+Generated /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/modbus_zlan_master_v1.0.bin
+[9/9] cd /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build && /home/rados/.espressif/python_env/idf6.0_py3.12_env/bin/python /home/rados/esp/.espressif/v6.0.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/partition_table/partition-table.bin /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/modbus_zlan_master_v1.0.bin
+modbus_zlan_master_v1.0.bin binary size 0xce9f0 bytes. Smallest app partition is 0x100000 bytes. 0x31610 bytes (19%) free.

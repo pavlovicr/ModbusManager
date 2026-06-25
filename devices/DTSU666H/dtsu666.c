@@ -82,14 +82,14 @@
 static const mb_parameter_descriptor_t s_dtsu666_descriptors[] = {
     // CID                   Ime              Enota  Slave             RegType           Start   Size  Offs  Type             Size             param_opts                          Perms
     // Napetosti (L-N)
-    { DTSU_CID_VOLTAGE_A,    "Napetost_A",    "V",   SLAVE_ID_DTSU666, MB_PARAM_HOLDING, 0x2000, 2,    0,    PARAM_TYPE_FLOAT, PARAM_SIZE_FLOAT, {.opt1=0,      .opt2=400,    .opt3=1}, PAR_PERMS_READ_TRIGGER },
-    { DTSU_CID_VOLTAGE_B,    "Napetost_B",    "V",   SLAVE_ID_DTSU666, MB_PARAM_HOLDING, 0x2002, 2,    0,    PARAM_TYPE_FLOAT, PARAM_SIZE_FLOAT, {.opt1=0,      .opt2=400,    .opt3=1}, PAR_PERMS_READ_TRIGGER },
-    { DTSU_CID_VOLTAGE_C,    "Napetost_C",    "V",   SLAVE_ID_DTSU666, MB_PARAM_HOLDING, 0x2004, 2,    0,    PARAM_TYPE_FLOAT, PARAM_SIZE_FLOAT, {.opt1=0,      .opt2=400,    .opt3=1}, PAR_PERMS_READ_TRIGGER },
+    { DTSU_CID_VOLTAGE_A,    "Napetost_A",    "V",   SLAVE_ID_DTSU666, MB_PARAM_HOLDING, 0x2006, 2,    0,    PARAM_TYPE_FLOAT, PARAM_SIZE_FLOAT, {.opt1=0,      .opt2=400,    .opt3=1}, PAR_PERMS_READ_TRIGGER },
+    { DTSU_CID_VOLTAGE_B,    "Napetost_B",    "V",   SLAVE_ID_DTSU666, MB_PARAM_HOLDING, 0x2008, 2,    0,    PARAM_TYPE_FLOAT, PARAM_SIZE_FLOAT, {.opt1=0,      .opt2=400,    .opt3=1}, PAR_PERMS_READ_TRIGGER },
+    { DTSU_CID_VOLTAGE_C,    "Napetost_C",    "V",   SLAVE_ID_DTSU666, MB_PARAM_HOLDING, 0x200A, 2,    0,    PARAM_TYPE_FLOAT, PARAM_SIZE_FLOAT, {.opt1=0,      .opt2=400,    .opt3=1}, PAR_PERMS_READ_TRIGGER },
     
     // Napetosti (L-L)
-    { DTSU_CID_VOLTAGE_AB,   "Napetost_AB",   "V",   SLAVE_ID_DTSU666, MB_PARAM_HOLDING, 0x2006, 2,    0,    PARAM_TYPE_FLOAT, PARAM_SIZE_FLOAT, {.opt1=0,      .opt2=700,    .opt3=1}, PAR_PERMS_READ_TRIGGER },
-    { DTSU_CID_VOLTAGE_BC,   "Napetost_BC",   "V",   SLAVE_ID_DTSU666, MB_PARAM_HOLDING, 0x2008, 2,    0,    PARAM_TYPE_FLOAT, PARAM_SIZE_FLOAT, {.opt1=0,      .opt2=700,    .opt3=1}, PAR_PERMS_READ_TRIGGER },
-    { DTSU_CID_VOLTAGE_CA,   "Napetost_CA",   "V",   SLAVE_ID_DTSU666, MB_PARAM_HOLDING, 0x200A, 2,    0,    PARAM_TYPE_FLOAT, PARAM_SIZE_FLOAT, {.opt1=0,      .opt2=700,    .opt3=1}, PAR_PERMS_READ_TRIGGER },
+    { DTSU_CID_VOLTAGE_AB,   "Napetost_AB",   "V",   SLAVE_ID_DTSU666, MB_PARAM_HOLDING, 0x2000, 2,    0,    PARAM_TYPE_FLOAT, PARAM_SIZE_FLOAT, {.opt1=0,      .opt2=700,    .opt3=1}, PAR_PERMS_READ_TRIGGER },
+    { DTSU_CID_VOLTAGE_BC,   "Napetost_BC",   "V",   SLAVE_ID_DTSU666, MB_PARAM_HOLDING, 0x2002, 2,    0,    PARAM_TYPE_FLOAT, PARAM_SIZE_FLOAT, {.opt1=0,      .opt2=700,    .opt3=1}, PAR_PERMS_READ_TRIGGER },
+    { DTSU_CID_VOLTAGE_CA,   "Napetost_CA",   "V",   SLAVE_ID_DTSU666, MB_PARAM_HOLDING, 0x2004, 2,    0,    PARAM_TYPE_FLOAT, PARAM_SIZE_FLOAT, {.opt1=0,      .opt2=700,    .opt3=1}, PAR_PERMS_READ_TRIGGER },
     
     // Toki
     { DTSU_CID_CURRENT_A,    "Tok_A",         "A",   SLAVE_ID_DTSU666, MB_PARAM_HOLDING, 0x200C, 2,    0,    PARAM_TYPE_FLOAT, PARAM_SIZE_FLOAT, {.opt1=0,      .opt2=100,    .opt3=1}, PAR_PERMS_READ_TRIGGER },
@@ -257,9 +257,9 @@ esp_err_t dtsu666_read_all(uint16_t cid_offset, dtsu666_data_t *out)
     READ_PARAM(DTSU_CID_VOLTAGE_C,    voltage_c)
     
     // Napetosti (L-L)
-    READ_PARAM(DTSU_CID_VOLTAGE_AB,   voltage_ab)
-    READ_PARAM(DTSU_CID_VOLTAGE_BC,   voltage_bc)
-    READ_PARAM(DTSU_CID_VOLTAGE_CA,   voltage_ca)
+   // READ_PARAM(DTSU_CID_VOLTAGE_AB,   voltage_ab)
+   // READ_PARAM(DTSU_CID_VOLTAGE_BC,   voltage_bc)
+   // READ_PARAM(DTSU_CID_VOLTAGE_CA,   voltage_ca)
     
     // Toki
     READ_PARAM(DTSU_CID_CURRENT_A,    current_a)
@@ -333,9 +333,9 @@ void dtsu666_print(const dtsu666_data_t *data)
            data->voltage_a, data->voltage_b, data->voltage_c);
     
     // Napetosti (L-L)
-    printf("║  Napetosti (L-L)                                     ║\n");
-    printf("║    AB: %7.2f V   BC: %7.2f V   CA: %7.2f V   ║\n",
-           data->voltage_ab, data->voltage_bc, data->voltage_ca);
+    //printf("║  Napetosti (L-L)                                     ║\n");
+    //printf("║    AB: %7.2f V   BC: %7.2f V   CA: %7.2f V   ║\n",
+    //       data->voltage_ab, data->voltage_bc, data->voltage_ca);
     
     // Toki
     printf("║  Toki                                                ║\n");
@@ -348,17 +348,17 @@ void dtsu666_print(const dtsu666_data_t *data)
     printf("║  Moč                                                 ║\n");
     printf("║    A: %8.1f W    B: %8.1f W    C: %8.1f W   ║\n",
            data->power_a, data->power_b, data->power_c);
-    printf("║    Skupaj: %10.1f W                             ║\n",
+    printf("║    Skupaj: %10.1f W                              ║\n",
            data->power_total);
     
     // Frekvenca
-    printf("║  Frekvenca: %7.3f Hz                              ║\n",
+    printf("║  Frekvenca: %7.3f Hz                               ║\n",
            data->frequency);
     
     // Energija
-    printf("║  Energija  uvoz: %10.3f kWh                     ║\n",
+    printf("║  Energija  uvoz: %10.3f kWh                      ║\n",
            data->energy_import);
-    printf("║  Energija izvoz: %10.3f kWh                     ║\n",
+    printf("║  Energija izvoz: %10.3f kWh                      ║\n",
            data->energy_export);
     
     printf("╚══════════════════════════════════════════════════════╝\n\n");
