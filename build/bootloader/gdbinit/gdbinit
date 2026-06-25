@@ -1,0 +1,2 @@
+source /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/bootloader/gdbinit/symbols
+source /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/bootloader/gdbinit/connect

@@ -1,0 +1,13 @@
+# Target labels
+ bootloader
+# Source files and their labels
+/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/CMakeFiles/bootloader
+/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/CMakeFiles/bootloader.rule
+/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/CMakeFiles/bootloader-complete.rule
+/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
+/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule

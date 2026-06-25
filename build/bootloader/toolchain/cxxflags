@@ -1,0 +1,6 @@
+"-specs=/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/bootloader/specs/picolibc.specs"
+-mlongcalls
+-fno-builtin-memcpy
+-fno-builtin-memset
+-fno-builtin-bzero
+-fno-rtti
