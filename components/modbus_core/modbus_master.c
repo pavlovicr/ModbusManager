@@ -11,7 +11,9 @@
 #define MB_STR(x)  _MB_STR(x)
 
 static void *s_master_handle = NULL;
-
+//''''''''''''''''''''''''''''''''''''''''''''''''''''''???????????????
+//static void *s_mb_ctx = NULL;// Handle za Modbus Master (esp-modbus v2.x) - uporabi ga v read/write funkcijah
+//''''''''''''''''''''''''''''''''''''''''''''''''''''''???????????????
 // IP tabela za ZLAN gateway.
 // POMEMBNO (sprememba v esp-modbus v2.x): vsak vnos mora biti v obliki
 // "UID;ip_ali_hostname;port", kjer je UID slave naslov (mb_slave_addr iz
@@ -21,7 +23,7 @@ static void *s_master_handle = NULL;
 // Spodaj je primer za slave ID-je 1 in 2 - PRILAGODI glede na svojo tabelo!
 static const char *s_tcp_ip_table[] = {
     "11;" MODBUS_SERVER_IP ";" MB_STR(MODBUS_TCP_PORT),
-    "2;" MODBUS_SERVER_IP ";" MB_STR(MODBUS_TCP_PORT),
+    "3;" MODBUS_SERVER_IP ";" MB_STR(MODBUS_TCP_PORT),
     NULL
 };
 
@@ -89,6 +91,27 @@ esp_err_t modbus_master_read_float(uint16_t cid, float *value)
     
     return err;
 }
+
+
+esp_err_t modbus_master_read_uint16(uint16_t cid, uint16_t *out)
+{
+    if (!out) return ESP_ERR_INVALID_ARG;
+    uint8_t type = PARAM_TYPE_U16;
+    //.......................................??????????????????????????????????????
+    //esp_err_t err = mbc_master_get_parameter(s_mb_ctx, cid, (uint8_t*)out, &type);
+    esp_err_t err = mbc_master_get_parameter(s_master_handle, cid, (uint8_t *)out, &type);
+    //.......................................??????????????????????????????????????
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "mbc_master_get_parameter(CID %d) failed: %s", cid, esp_err_to_name(err));
+    }
+    return err;
+}
+
+
+
+
+
+
 
 void modbus_master_deinit(void)
 {

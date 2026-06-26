@@ -3,6 +3,10 @@
 #include "esp_err.h"
 #include "mbcontroller.h"   // esp-modbus
 
+
+
+esp_err_t modbus_master_read_uint16(uint16_t cid, uint16_t *out);//deklaracija funkcije za branje 16-bitnega unsigned integerja iz Modbus Master-ja po CID
+
 /**
  * @brief Inicializira Modbus TCP Master z esp-modbus knjižnico.
  *        Kliči enkrat po wifi_manager_init().

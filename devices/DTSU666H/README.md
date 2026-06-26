@@ -47,21 +47,6 @@ Display: Float, ABCD (če pokaže napačne vrednosti, poskusi z BACD)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Povezave
 
 - [Uradni podatkovni list](https://www.chintglobal.com/content/dam/chint/global/product-center/instruments-meters/electricity-meter/din-rail-meter/dtsu666/manual/DTSU666%20DSSU666%20User%20Manual.pdf)

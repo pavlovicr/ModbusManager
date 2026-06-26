@@ -1122,6 +1122,13 @@
 /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/DTSU666H/CMakeFiles/install.dir
 /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/DTSU666H/CMakeFiles/install/local.dir
 /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/DTSU666H/CMakeFiles/install/strip.dir
+/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/SOILHUMIDITY_1/CMakeFiles/__idf_SOILHUMIDITY_1.dir
+/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/SOILHUMIDITY_1/CMakeFiles/edit_cache.dir
+/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/SOILHUMIDITY_1/CMakeFiles/rebuild_cache.dir
+/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/SOILHUMIDITY_1/CMakeFiles/list_install_components.dir
+/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/SOILHUMIDITY_1/CMakeFiles/install.dir
+/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/SOILHUMIDITY_1/CMakeFiles/install/local.dir
+/home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/SOILHUMIDITY_1/CMakeFiles/install/strip.dir
 /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/main/CMakeFiles/__idf_main.dir
 /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/main/CMakeFiles/edit_cache.dir
 /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/esp-idf/main/CMakeFiles/rebuild_cache.dir
