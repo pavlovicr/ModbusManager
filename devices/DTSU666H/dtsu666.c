@@ -341,7 +341,7 @@ void dtsu666_print(const dtsu666_data_t *data)
     printf("║  Toki                                                ║\n");
     printf("║    A: %8.3f A    B: %8.3f A    C: %8.3f A   ║\n",
            data->current_a, data->current_b, data->current_c);
-    printf("║    N: %8.3f A                                    ║\n",
+    printf("║    N: %8.3f A                                     ║\n",
            data->current_n);
     
     // Moč

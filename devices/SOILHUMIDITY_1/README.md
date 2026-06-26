@@ -43,8 +43,7 @@ Display: Float, ABCD (če pokaže napačne vrednosti, poskusi z BACD)
 
 
 
-- [Navodila ]https://www.imiconsystem.com/wp-content/uploads/2021/05/Soil-Nitrogen-Phosphorus-and-Potassium-Three-in-One-Fertility-Sensor-Model-485-1.pdf?srsltid=AfmBOor0iQ0IoWL5lx-d23cJqNNds2SPSlNVbkeNJkZgAbgJvzAjTGor
-
+- [Navodila ]
 
 ## Nastavitve
 - Slave ID: 11

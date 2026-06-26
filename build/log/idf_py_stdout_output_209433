@@ -1,0 +1,20 @@
+Command: ninja all
+[1/11] Performing build step for 'bootloader'
+[1/1] cd /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/bootloader && /home/rados/.espressif/python_env/idf6.0_py3.12_env/bin/python /home/rados/esp/.espressif/v6.0.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/bootloader/bootloader.bin
+Bootloader binary size 0x5240 bytes. 0x2dc0 bytes (36%) free.
+[2/11] No install step for 'bootloader'
+[3/11] Building C object esp-idf/SOILHUMIDITY_1/CMakeFiles/__idf_SOILHUMIDITY_1.dir/soilhum_1.c.obj
+[4/11] Linking C static library esp-idf/SOILHUMIDITY_1/libSOILHUMIDITY_1.a
+[5/11] Completed 'bootloader'
+[6/11] Building C object esp-idf/DTSU666H/CMakeFiles/__idf_DTSU666H.dir/dtsu666.c.obj
+[7/11] Linking C static library esp-idf/DTSU666H/libDTSU666H.a
+[8/11] Generating esp-idf/esp_system/ld/sections.ld
+[9/11] Linking CXX executable modbus_zlan_master_v1.0.elf
+[10/11] Generating binary image from built executable
+esptool v5.2.dev2
+Creating ESP32S3 image...
+Merged 3 ELF sections.
+Successfully created ESP32S3 image.
+Generated /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/modbus_zlan_master_v1.0.bin
+[11/11] cd /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build && /home/rados/.espressif/python_env/idf6.0_py3.12_env/bin/python /home/rados/esp/.espressif/v6.0.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/partition_table/partition-table.bin /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/modbus_zlan_master_v1.0.bin
+modbus_zlan_master_v1.0.bin binary size 0xcee00 bytes. Smallest app partition is 0x100000 bytes. 0x31200 bytes (19%) free.

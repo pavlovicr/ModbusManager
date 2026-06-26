@@ -26,7 +26,7 @@
 #include "wifi_manager.h"
 #include "modbus_master.h"
 #include "dtsu666.h"
-#include "soilhum_1.h"          // ← DODANO: NPK senzor
+#include "soilhum_1.h"          // ← DODANO: SOIL senzor
 
 // Dodaj sem include za vsako naslednjo napravo:
 // #include "devices/sdm120.h"
@@ -37,8 +37,8 @@
 // Ob dodajanju naprave: poveži njeno tabelo tukaj in zabeleži cid_offset.
 
 #define DTSU666_CID_OFFSET  0   // DTSU666 zasede CID 0..DTSU_CID_COUNT-1
-#define NPK_CID_OFFSET      (DTSU666_CID_OFFSET + DTSU_CID_COUNT)  // ← DODANO
-// #define SDM120_CID_OFFSET (NPK_CID_OFFSET + NPK_CID_COUNT)      // za naslednje
+#define SOIL_CID_OFFSET      (DTSU666_CID_OFFSET + DTSU_CID_COUNT)  // ← DODANO
+// #define SDM120_CID_OFFSET (SOIL_CID_OFFSET + SOIL _CID_COUNT)      // za naslednje
 
 static mb_parameter_descriptor_t s_combined_descriptors[64]; // dovolj za ~3 naprave
 static uint16_t s_combined_count = 0;
@@ -55,11 +55,11 @@ static void build_combined_descriptor(void)
     s_combined_count += count;
 
     // ── NPK senzor (soilhum_1) ──
-    desc = npk_get_descriptors(&count);   // ← DODANO
+    desc = soil_get_descriptors(&count);   // ← DODANO
     // Popravi CID vrednosti za offset
     for (uint16_t i = 0; i < count; i++) {
         s_combined_descriptors[s_combined_count + i] = desc[i];
-        s_combined_descriptors[s_combined_count + i].cid += NPK_CID_OFFSET;
+        s_combined_descriptors[s_combined_count + i].cid += SOIL_CID_OFFSET;
     }
     s_combined_count += count;
 
@@ -80,7 +80,7 @@ static void build_combined_descriptor(void)
 static void reading_task(void *pvParameters)
 {
     dtsu666_data_t dtsu_data = {0};
-    npk_data_t npk_data = {0};     // ← DODANO
+    soil_data_t soil_data = {0};     // ← DODANO
 
     while (1) {
         ESP_LOGI(TAG, "── Cikel branja ──────────────────────────────");
@@ -93,12 +93,12 @@ static void reading_task(void *pvParameters)
             ESP_LOGE(TAG, "DTSU666-H: branje neuspešno");
         }
 
-        // Beri NPK senzor
-        err = npk_read_all(NPK_CID_OFFSET, &npk_data);   // ← DODANO
+        // Beri SOIL senzor
+        err = soil_read_all(SOIL_CID_OFFSET, &soil_data);   // ← DODANO
         if (err == ESP_OK) {
-            npk_print(&npk_data);
+            soil_print(&soil_data);
         } else {
-            ESP_LOGE(TAG, "NPK senzor: branje neuspešno");
+            ESP_LOGE(TAG, "SOIL senzor: branje neuspešno");
         }
 
         // Beri naslednjo napravo:

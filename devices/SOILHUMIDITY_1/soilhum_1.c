@@ -1,12 +1,10 @@
 /**
  * @file soilhum_1.c
- * @brief NPK (dušik, fosfor, kalij) senzor - Modbus RTU master gonilnik
+ * @brief Senzor vlage in temperature v zemlji - Modbus RTU master gonilnik
  * 
- * Datoteka vsebuje funkcije za komunikacijo z NPK senzorjem preko Modbus RTU.
- * Senzor vrača tri 16-bitne integer vrednosti (mg/kg) na naslovih:
- *   0x001E - Dušik (N)
- *   0x001F - Fosfor (P)
- *   0x0020 - Kalij (K)
+ * Senzor vrača dve 16-bitni integer vrednosti (dejansko vrednost * 10):
+ *   0x0000 - Relativna vlaga (0-100%) v 0.1% korakih (npr. 256 = 25.6%)
+ *   0x0001 - Temperatura v °C (npr. 235 = 23.5°C, predznak je lahko negativen)
  * 
  * @author Rados
  * @date 2026
@@ -20,10 +18,10 @@
 #include "app_config.h"
 
 // ─── Oznaka za beleženje ──────────────────────────────────────────────────────
-#define TAG "NPK"
+#define TAG "SOIL"
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// REGISTRSKA PRESLIKAVA - NPK senzor
+// REGISTRSKA PRESLIKAVA - SOIL senzor
 // ═══════════════════════════════════════════════════════════════════════════════
 //
 // Vsi registri so 16-bitni integerji (uint16_t), samo za branje.
@@ -33,101 +31,84 @@
 //
 //  Register | Naziv        | Enota  | Opis
 //  ---------|--------------|--------|------------------------------------
-//  0x001E   | Dušik (N)    | mg/kg  | Vsebnost dušika v zemlji
-//  0x001F   | Fosfor (P)   | mg/kg  | Vsebnost fosforja v zemlji
-//  0x0020   | Kalij (K)    | mg/kg  | Vsebnost kalija v zemlji
+//  0x0000   | Vlaga        | %      | 0-100%, vrednost * 10
+//  0x0001   | Temperatura  | °C     | Temperatura zemlje, vrednost * 10
 //
 // ═══════════════════════════════════════════════════════════════════════════════
 
 // ─── Deskriptorska tabela za Modbus master ────────────────────────────────
-//
-// Vsak red v tabeli predstavlja en parameter, ki ga želimo brati.
-// Polja:
-//   .cid                = Edinstvena označba parametra
-//   .param_key          = Besedilno ime parametra (za beleženje)
-//   .param_units        = Merska enota
-//   .mb_slave_addr      = Modbus naslov slave naprave (definiran v app_config.h)
-//   .mb_param_type      = Vrsta registra (MB_PARAM_HOLDING = držalni registri)
-//   .mb_reg_start       = Začetni naslov registra na senzorju
-//   .mb_size            = Število registrov (1 = 16-bitni integer)
-//   .param_offset       = Odmik v strukturi (0 = od začetka)
-//   .param_type         = Vrsta podatka (PARAM_TYPE_UINT16)
-//   .param_size         = Velikost podatka (PARAM_SIZE_UINT16 = 2 bajta)
-//   .param_opts         = Možnosti (najmanj, največ, korak) za preverjanje
-//   .access             = Dostop (PAR_PERMS_READ_TRIGGER = beri na zahtevo)
-//
 
-static const mb_parameter_descriptor_t s_npk_descriptors[] = {
-    // CID               Ime          Enota  Slave            RegType           Start   Size  Offs  Type               Size             param_opts          Perms
-    { NPK_CID_NITROGEN,  "Dušik",     "mg/kg", SLAVE_ID_NPK,  MB_PARAM_HOLDING, 0x001E, 1,    0,    PARAM_TYPE_U16, PARAM_SIZE_U16, {.opt1=0, .opt2=1999, .opt3=1}, PAR_PERMS_READ_TRIGGER },
-    { NPK_CID_PHOSPHORUS,"Fosfor",    "mg/kg", SLAVE_ID_NPK,  MB_PARAM_HOLDING, 0x001F, 1,    0,    PARAM_TYPE_U16, PARAM_SIZE_U16, {.opt1=0, .opt2=1999, .opt3=1}, PAR_PERMS_READ_TRIGGER },
-    { NPK_CID_POTASSIUM, "Kalij",     "mg/kg", SLAVE_ID_NPK,  MB_PARAM_HOLDING, 0x0020, 1,    0,    PARAM_TYPE_U16, PARAM_SIZE_U16, {.opt1=0, .opt2=1999, .opt3=1}, PAR_PERMS_READ_TRIGGER },
+static const mb_parameter_descriptor_t s_soil_descriptors[] = {
+    { SOIL_CID_MOISTURE,    "Vlaga",        "%",   SLAVE_ID_SOIL, MB_PARAM_HOLDING, 0x0000, 1, 0, PARAM_TYPE_U16, PARAM_SIZE_U16, {.opt1=0, .opt2=1000, .opt3=1}, PAR_PERMS_READ_TRIGGER },
+    { SOIL_CID_TEMPERATURE, "Temperatura",  "°C",  SLAVE_ID_SOIL, MB_PARAM_HOLDING, 0x0001, 1, 0, PARAM_TYPE_U16, PARAM_SIZE_U16, {.opt1=-400, .opt2=800, .opt3=1}, PAR_PERMS_READ_TRIGGER },
 };
 
 // Število parametrov v tabeli
 static const uint16_t s_descriptor_count =
-    sizeof(s_npk_descriptors) / sizeof(s_npk_descriptors[0]);
+    sizeof(s_soil_descriptors) / sizeof(s_soil_descriptors[0]);
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // JAVNE FUNKCIJE
 // ═══════════════════════════════════════════════════════════════════════════════
 
-/**
- * @brief Vrni deskriptorsko tabelo z vsemi parametri senzorja
- * 
- * @param out_count Kazalec, kjer se shrani število parametrov
- * @return Kazalec na deskriptorsko tabelo
- */
-const mb_parameter_descriptor_t *npk_get_descriptors(uint16_t *out_count)
+const mb_parameter_descriptor_t *soil_get_descriptors(uint16_t *out_count)
 {
     if (out_count) {
         *out_count = s_descriptor_count;
     }
-    return s_npk_descriptors;
+    return s_soil_descriptors;
 }
 
 /**
- * @brief Beri vse parametre z NPK senzorja in jih shrani v strukturo
+ * @brief Beri vse parametre s SOIL senzorja in jih shrani v strukturo
  * 
- * Prebere tri 16-bitne registre (N, P, K) in jih shrani v npk_data_t.
+ * Prebere dva 16-bitna registra (vlago in temperaturo) ter ju pretvori
+ * v realne vrednosti z deljenjem z 10.
  * 
  * @param cid_offset Začetni CID odmik (običajno 0)
  * @param out       Kazalec na strukturo, kamor se shranijo rezultati
- * @return ESP_OK, če so vsi trije parametri uspešno prebrani,
+ * @return ESP_OK, če sta oba parametra uspešno prebrana,
  *         ESP_FAIL, če kateri koli ni uspešen,
  *         ESP_ERR_INVALID_ARG, če je 'out' NULL
  */
-esp_err_t npk_read_all(uint16_t cid_offset, npk_data_t *out)
+esp_err_t soil_read_all(uint16_t cid_offset, soil_data_t *out)
 {
     if (!out) return ESP_ERR_INVALID_ARG;
 
     // Inicijaliziraj strukturo na vse ničle
     memset(out, 0, sizeof(*out));
     
-    // Števec uspešnih branj
+    // Začasne spremenljivke za surove 16-bitne vrednosti
+    uint16_t raw_moisture = 0;
+    uint16_t raw_temperature = 0;
+    
     int success = 0;
 
-    // Makro za branje 16-bitnega integerja
-    #define READ_PARAM_U16(cid_rel, field) \
-        if (modbus_master_read_uint16(cid_offset + (cid_rel), &out->field) == ESP_OK) { \
-            success++; \
-        } else { \
-            ESP_LOGW(TAG, "Branje CID %u (%s) neuspešno", cid_offset + (cid_rel), #field); \
-        }
+    // Preberi vlago
+    if (modbus_master_read_uint16(cid_offset + SOIL_CID_MOISTURE, &raw_moisture) == ESP_OK) {
+        out->moisture = (float)raw_moisture / 10.0f;
+        success++;
+    } else {
+        ESP_LOGW(TAG, "Branje vlage neuspešno (CID %d)", cid_offset + SOIL_CID_MOISTURE);
+    }
 
-    // ─── Beri vse tri parametre ─────────────────────────────────────────────
-    READ_PARAM_U16(NPK_CID_NITROGEN,   nitrogen)
-    READ_PARAM_U16(NPK_CID_PHOSPHORUS, phosphorus)
-    READ_PARAM_U16(NPK_CID_POTASSIUM,  potassium)
+    // Preberi temperaturo
+    if (modbus_master_read_uint16(cid_offset + SOIL_CID_TEMPERATURE, &raw_temperature) == ESP_OK) {
+        // Temperatura je lahko negativna (npr. -5.0°C = -50 v registru)
+        // uint16_t ne more predstaviti negativnih vrednosti, zato je potrebna pretvorba
+        int16_t signed_temp = (int16_t)raw_temperature;
+        out->temperature = (float)signed_temp / 10.0f;
+        success++;
+    } else {
+        ESP_LOGW(TAG, "Branje temperature neuspešno (CID %d)", cid_offset + SOIL_CID_TEMPERATURE);
+    }
 
-    #undef READ_PARAM_U16
-
-    // Označi veljavnost – samo če so vsi trije prebrani
-    out->valid = (success == NPK_CID_COUNT);
+    // Označi veljavnost – samo če sta oba prebrana
+    out->valid = (success == SOIL_CID_COUNT);
     
-    ESP_LOGI(TAG, "Prebrano %d/%d parametrov", success, NPK_CID_COUNT);
+    ESP_LOGI(TAG, "Prebrano %d/%d parametrov", success, SOIL_CID_COUNT);
     
-    return (success == NPK_CID_COUNT) ? ESP_OK : ESP_FAIL;
+    return (success == SOIL_CID_COUNT) ? ESP_OK : ESP_FAIL;
 }
 
 /**
@@ -135,16 +116,15 @@ esp_err_t npk_read_all(uint16_t cid_offset, npk_data_t *out)
  * 
  * @param data Kazalec na strukturo s prebranimi vrednostmi
  */
-void npk_print(const npk_data_t *data)
+void soil_print(const soil_data_t *data)
 {
     if (!data) return;
 
     printf("\n╔══════════════════════════════════════════════════════╗\n");
-    printf("║          NPK Senzor (dušik, fosfor, kalij)          ║\n");
+    printf("║          SOIL Senzor (vlaga, temperatura)            ║\n");
     printf("╠══════════════════════════════════════════════════════╣\n");
-    printf("║  Dušik (N):   %5u mg/kg                             ║\n", data->nitrogen);
-    printf("║  Fosfor (P):  %5u mg/kg                             ║\n", data->phosphorus);
-    printf("║  Kalij (K):   %5u mg/kg                             ║\n", data->potassium);
+    printf("║  Vlaga:        %5.1f %%                               ║\n", data->moisture);
+    printf("║  Temperatura:  %5.1f °C                              ║\n", data->temperature);
     printf("║  Veljavnost:  %s                                     ║\n", data->valid ? "DA" : "NE");
     printf("╚══════════════════════════════════════════════════════╝\n\n");
 }

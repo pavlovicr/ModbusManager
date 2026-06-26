@@ -25,10 +25,9 @@
 // ─── Energijski merilnik ──────────────────────────────────────────────────────
 #define SLAVE_ID_DTSU666        11   // CHINT DTSU666-H (trofazni merilnik)
 
-// ─── Senzor za zemljo (NPK) ──────────────────────────────────────────────────
-#define SLAVE_ID_NPK            3    // ⚠️ PREVERI: privzeti naslov je 1, 
-                                      //   če si ga spremenil, vpiši svojega!
-
+// ─── Senzor za zemljo (SOIL) ──────────────────────────────────────────────────
+#define SLAVE_ID_SOIL            3    // SOIL senzor (vlaga, temperatura zemlje) 
+                                      
 // ─── Rezervirano za prihodnje naprave ──────────────────────────────────────
 // #define SLAVE_ID_SDM120      12   // Eastron SDM120 (enofazni)
 // #define SLAVE_ID_SDM630      13   // Eastron SDM630 (trofazni)
