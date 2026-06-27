@@ -1,0 +1,8 @@
+Command: ninja all
+[1/4] cd /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build && /home/rados/.espressif/python_env/idf6.0_py3.12_env/bin/python /home/rados/esp/.espressif/v6.0.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/partition_table/partition-table.bin /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/modbus_zlan_master_v1.0.bin
+modbus_zlan_master_v1.0.bin binary size 0xcf400 bytes. Smallest app partition is 0x100000 bytes. 0x30c00 bytes (19%) free.
+[2/4] Performing build step for 'bootloader'
+[1/1] cd /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/bootloader && /home/rados/.espressif/python_env/idf6.0_py3.12_env/bin/python /home/rados/esp/.espressif/v6.0.1/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x0 /home/rados/esp/Projekti/Arlekino/modbus_zlan_master_v1.0/build/bootloader/bootloader.bin
+Bootloader binary size 0x5240 bytes. 0x2dc0 bytes (36%) free.
+[3/4] No install step for 'bootloader'
+[4/4] Completed 'bootloader'

@@ -27,6 +27,7 @@
 #include "modbus_master.h"
 #include "dtsu666.h"
 #include "soilhum_1.h"          // ← DODANO: SOIL senzor
+#include "zqwl_4ch.h"
 
 // Dodaj sem include za vsako naslednjo napravo:
 // #include "devices/sdm120.h"
@@ -38,6 +39,7 @@
 
 #define DTSU666_CID_OFFSET  0   // DTSU666 zasede CID 0..DTSU_CID_COUNT-1
 #define SOIL_CID_OFFSET      (DTSU666_CID_OFFSET + DTSU_CID_COUNT)  // ← DODANO
+#define ZQWL_CID_OFFSET     (SOIL_CID_OFFSET + SOIL_CID_COUNT)
 // #define SDM120_CID_OFFSET (SOIL_CID_OFFSET + SOIL _CID_COUNT)      // za naslednje
 
 static mb_parameter_descriptor_t s_combined_descriptors[64]; // dovolj za ~3 naprave
@@ -54,23 +56,21 @@ static void build_combined_descriptor(void)
            count * sizeof(mb_parameter_descriptor_t));
     s_combined_count += count;
 
-    // ── NPK senzor (soilhum_1) ──
-    desc = soil_get_descriptors(&count);   // ← DODANO
-    // Popravi CID vrednosti za offset
+    // ── SOIL senzor ──
+    desc = soil_get_descriptors(&count);
     for (uint16_t i = 0; i < count; i++) {
         s_combined_descriptors[s_combined_count + i] = desc[i];
         s_combined_descriptors[s_combined_count + i].cid += SOIL_CID_OFFSET;
     }
     s_combined_count += count;
 
-    // ── Naslednja naprava (primer) ──
-    // desc = sdm120_get_descriptors(&count);
-    // // Popravi CID vrednosti za offset
-    // for (uint16_t i = 0; i < count; i++) {
-    //     s_combined_descriptors[s_combined_count + i] = desc[i];
-    //     s_combined_descriptors[s_combined_count + i].cid += SDM120_CID_OFFSET;
-    // }
-    // s_combined_count += count;
+    // ── ZQWL 4-kanalni 0-20mA ──
+    desc = zqwl_get_descriptors(&count);
+    for (uint16_t i = 0; i < count; i++) {
+        s_combined_descriptors[s_combined_count + i] = desc[i];
+        s_combined_descriptors[s_combined_count + i].cid += ZQWL_CID_OFFSET;
+    }
+    s_combined_count += count;
 
     ESP_LOGI(TAG, "Skupna deskriptorska tabela: %d parametrov", s_combined_count);
 }
@@ -80,30 +80,32 @@ static void build_combined_descriptor(void)
 static void reading_task(void *pvParameters)
 {
     dtsu666_data_t dtsu_data = {0};
-    soil_data_t soil_data = {0};     // ← DODANO
+    soil_data_t soil_data = {0};
+    zqwl_data_t zqwl_data = {0};
 
     while (1) {
         ESP_LOGI(TAG, "── Cikel branja ──────────────────────────────");
 
         // Beri DTSU666-H
-        esp_err_t err = dtsu666_read_all(DTSU666_CID_OFFSET, &dtsu_data);
-        if (err == ESP_OK) {
+        if (dtsu666_read_all(DTSU666_CID_OFFSET, &dtsu_data) == ESP_OK) {
             dtsu666_print(&dtsu_data);
         } else {
             ESP_LOGE(TAG, "DTSU666-H: branje neuspešno");
         }
 
         // Beri SOIL senzor
-        err = soil_read_all(SOIL_CID_OFFSET, &soil_data);   // ← DODANO
-        if (err == ESP_OK) {
+        if (soil_read_all(SOIL_CID_OFFSET, &soil_data) == ESP_OK) {
             soil_print(&soil_data);
         } else {
             ESP_LOGE(TAG, "SOIL senzor: branje neuspešno");
         }
 
-        // Beri naslednjo napravo:
-        // sdm120_read_all(SDM120_CID_OFFSET, &sdm_data);
-        // sdm120_print(&sdm_data);
+        // Beri ZQWL modul
+        if (zqwl_read_all(ZQWL_CID_OFFSET, &zqwl_data) == ESP_OK) {
+            zqwl_print(&zqwl_data);
+        } else {
+            ESP_LOGE(TAG, "ZQWL modul: branje neuspešno");
+        }
 
         vTaskDelay(pdMS_TO_TICKS(MODBUS_READ_PERIOD_MS));
     }

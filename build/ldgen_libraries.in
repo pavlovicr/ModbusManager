@@ -211,6 +211,8 @@ $<TARGET_FILE:__idf_espressif__esp-modbus>
 $<TARGET_FILE:idf::DTSU666H>
 $<TARGET_FILE:__idf_modbus_core>
 $<TARGET_FILE:idf::SOILHUMIDITY_1>
+$<TARGET_FILE:idf::ZQWL_4CH_0_20mA>
 $<TARGET_FILE:idf::main>
 $<TARGET_FILE:__idf_DTSU666H>
 $<TARGET_FILE:__idf_SOILHUMIDITY_1>
+$<TARGET_FILE:__idf_ZQWL_4CH_0_20mA>

@@ -24,6 +24,7 @@ static void *s_master_handle = NULL;
 static const char *s_tcp_ip_table[] = {
     "11;" MODBUS_SERVER_IP ";" MB_STR(MODBUS_TCP_PORT),
     "3;" MODBUS_SERVER_IP ";" MB_STR(MODBUS_TCP_PORT),
+    "20;" MODBUS_SERVER_IP ";" MB_STR(MODBUS_TCP_PORT),
     NULL
 };
 

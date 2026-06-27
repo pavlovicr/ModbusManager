@@ -27,7 +27,11 @@
 
 // ─── Senzor za zemljo (SOIL) ──────────────────────────────────────────────────
 #define SLAVE_ID_SOIL            3    // SOIL senzor (vlaga, temperatura zemlje) 
-                                      
+
+// ─── Serijski RS485 vmesnik za analogne naprave 0-20mA ──────────────────────────────────────
+#define SLAVE_ID_ZQWL      20   //  ZQWL_4CH_0_20mA_1 (4-kanalni 0-20mA analogni vhodni modul) 
+
+
 // ─── Rezervirano za prihodnje naprave ──────────────────────────────────────
 // #define SLAVE_ID_SDM120      12   // Eastron SDM120 (enofazni)
 // #define SLAVE_ID_SDM630      13   // Eastron SDM630 (trofazni)
